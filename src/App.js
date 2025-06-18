@@ -1,12 +1,32 @@
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Login from "./page/Auth/Login";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import BaseCommanderDashboard from "./component/BaseCommander/BaseCommanderDashboard";
+import AdminDashboard from "./component/Admin/AdminDashboard";
+import LogisticsOfficerDashboard from "./component/LogisticsOfficer/LogisticsOfficerDashboard";
 
 function App() {
     return (
-        <div>
-            <h1 className="text-3xl font-bold underline text-green-600">
-                Hello world!
-            </h1>
-        </div>
+        <Router>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+
+                    <Route element={ <ProtectedRoute roles={["LogisticsOfficer"]} />} >
+                        <Route path="/logisticsOfficerDashboard/*" element={<LogisticsOfficerDashboard />} />
+                    </Route>
+
+                    <Route element={ <ProtectedRoute roles={["BaseCommander"]} />} >
+                        <Route path="/commanderDashboard" element={<BaseCommanderDashboard />} />
+                    </Route>
+
+                    <Route element={ <ProtectedRoute roles={["Admin"]} />} >
+                        <Route path="/adminDashboard" element={<AdminDashboard />} />
+                    </Route>
+                </Routes>
+            </AuthProvider>
+        </Router>
     );
 }
 
