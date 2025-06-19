@@ -19,7 +19,7 @@ function App() {
                     </Route>
 
                     <Route element={ <ProtectedRoute roles={["BaseCommander"]} />} >
-                        <Route path="/commanderDashboard" element={<BaseCommanderDashboard />} />
+                        <Route path="/commanderDashboard/*" element={<BaseCommanderDashboard />} />
                     </Route>
 
                     <Route element={ <ProtectedRoute roles={["Admin"]} />} >
