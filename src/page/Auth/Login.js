@@ -14,7 +14,7 @@ const Login = () => {
         try {
             const res = await api.post("/api/user/login", { email, password })
             if (res.status === 200) {
-                const { token, user } = res.data
+                const { token } = res.data
                 const userDetailsRes = await api.get("/api/user", {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -22,11 +22,7 @@ const Login = () => {
                 });
 
                 const fullUser = userDetailsRes.data.user;
-
-                console.log(fullUser)
-                login({ token, user: fullUser });
-
-                login(userData);
+                login({ token, user: fullUser })
             }
         } catch (error) {
             console.error("Login failed:", error.response?.data || error.message);

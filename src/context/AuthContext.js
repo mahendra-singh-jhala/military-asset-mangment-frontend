@@ -28,6 +28,8 @@ const AuthProvider = ({ children }) => {
             navigate("/commanderDashboard");
         } else if (role === "LogisticsOfficer") {
             navigate("/logisticsOfficerDashboard");
+        } else {
+            navigate("/login")
         }
     }
 

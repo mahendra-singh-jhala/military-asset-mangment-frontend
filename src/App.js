@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./page/Auth/Login";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -11,6 +11,7 @@ function App() {
         <Router>
             <AuthProvider>
                 <Routes>
+                    <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/login" element={<Login />} />
 
                     <Route element={ <ProtectedRoute roles={["LogisticsOfficer"]} />} >
