@@ -41,7 +41,7 @@ const Purchase = ({ purchaseData, fetchPurchase }) => {
                 </div>
             </div>
 
-            {/* Table */}
+            {/* Purchase Table */}
             <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-sm">
                 <thead className="bg-gray-200 text-gray-700 text-left text-sm uppercase">
                     <tr>

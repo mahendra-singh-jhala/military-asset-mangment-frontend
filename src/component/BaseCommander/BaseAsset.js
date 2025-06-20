@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Asset = ({ asset }) => {
+const BaseAsset = ({ asset }) => {
     const [selectedCategory, setSelectedCategory] = useState("")
 
     const uniqueCategories = [...new Set(asset?.map(a => a.category))];
@@ -42,4 +42,4 @@ const Asset = ({ asset }) => {
     )
 }
 
-export default Asset
+export default BaseAsset

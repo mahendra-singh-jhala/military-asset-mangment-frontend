@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../config/API';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const Order = ({ id }) => {
     const [order, setOrder] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [selectedItem, setSelectedItem] = useState(null)
     const [transferDate, setTransferDate] = useState("")
+    const { auth } = useAuth()
     const navigate = useNavigate()
 
     // fetch order
@@ -54,7 +56,9 @@ const Order = ({ id }) => {
                         <th className="px-6 py-3 border-b">Base (Purchase)</th>
                         <th className="px-6 py-3 border-b">Quantity</th>
                         <th className="px-6 py-3 border-b">Date</th>
-                        <th className="px-6 py-3 border-b">Action</th>
+                        {auth?.user?.role !== "Admin" && (
+                            <th className="px-6 py-3 border-b">Action</th>
+                        )}
                     </tr>
                 </thead>
                 <tbody className="text-gray-700 text-sm">
@@ -64,11 +68,14 @@ const Order = ({ id }) => {
                             <td className="px-6 py-4 border-b">{item?.baseId?.name}</td>
                             <td className="px-6 py-4 border-b">{item.quantity}</td>
                             <td className="px-6 py-4 border-b">{new Date(item.date).toISOString().split('T')[0]}</td>
-                            <td className="px-6 py-4 border-b">
-                                <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => handleOpenModal(item)}>
-                                    Transfer
-                                </button>
-                            </td>
+                            {auth?.user?.role !== "Admin" && (
+                                <td className="px-6 py-4 border-b">
+                                    <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => handleOpenModal(item)}>
+                                        Transfer
+                                    </button>
+                                </td>
+                            )}
+
                         </tr>
                     ))}
                 </tbody>

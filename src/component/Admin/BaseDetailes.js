@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
-import Navbar from '../../page/Navbar/Navbar'
-import { LuLogOut } from 'react-icons/lu'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes, useParams } from 'react-router-dom'
 import api from '../../config/API'
+import BaseAsset from '../BaseCommander/BaseAsset'
 import Purchase from '../LogisticsOfficer/Purchase'
 import AssetTransfer from '../LogisticsOfficer/AssetTransfer'
-import BaseAsset from './BaseAsset'
+import Order from '../LogisticsOfficer/Order'
+import BaseOfficers from './BaseOfficers'
+import { CiLogout } from "react-icons/ci";
 
-const BaseCommanderDashboard = () => {
+const BaseDetailes = () => {
     const [base, setBase] = useState("")
-    const { auth, logout } = useAuth()
+    const { id } = useParams()
 
     // fetch base
     const fetchBase = async () => {
         try {
-            const res = await api.get(`/api/base/${auth?.user?.baseId._id}`)
+            const res = await api.get(`/api/base/${id}`)
             if (res.status === 200) {
                 setBase(res.data)
             }
@@ -36,7 +36,11 @@ const BaseCommanderDashboard = () => {
     return (
         <div>
             <header>
-                <Navbar />
+                <div className="p-3 bg-slate-600 text-white">
+                    <Link to={`/adminDashboard/${id}`} className="text-center">
+                        <h1 className="text-xl font-bold font-serif">{base?.base?.name} ({base?.base?.location})</h1>
+                    </Link>
+                </div>
             </header>
             <main className="mt-4">
                 <div className="border-2 border-black rounded-lg py-4 px-6 mx-4">
@@ -59,31 +63,43 @@ const BaseCommanderDashboard = () => {
                     <div className="border-b-2 p-2 flex flex-wrap justify-between items-center">
                         <ul className="flex space-x-4 font-bold">
                             <li className="border-r-2 px-4 hover:text-slate-600 cursor-pointer">
-                                <Link to="/commanderDashboard">
+                                <Link to={`/adminDashboard/${id}`}>
+                                    BaseOfficers
+                                </Link>
+                            </li>
+                            <li className="border-r-2 px-4 hover:text-slate-600 cursor-pointer">
+                                <Link to={`/adminDashboard/${id}/asset`}>
                                     BaseAsset
                                 </Link>
                             </li>
                             <li className="border-r-2 px-4 hover:text-slate-600 cursor-pointer">
-                                <Link to="/commanderDashboard/purchase">
+                                <Link to={`/adminDashboard/${id}/purchase`}>
                                     Purchase
                                 </Link>
                             </li>
+                            <li className="border-r-2 px-4 hover:text-slate-600 cursor-pointer">
+                                <Link to={`/adminDashboard/${id}/order`}>
+                                    Order
+                                </Link>
+                            </li>
                             <li className="px-4 hover:text-slate-600 cursor-pointer">
-                                <Link to="/commanderDashboard/transfer">
+                                <Link to={`/adminDashboard/${id}/transfer`}>
                                     Transfer
                                 </Link>
                             </li>
                         </ul>
-                        <div className="cursor-pointer">
-                            <LuLogOut onClick={logout} className="text-2xl text-gray-600 hover:text-red-500 transition-colors"
+                        <Link to="/adminDashboard" className="cursor-pointer">
+                            <CiLogout className="text-2xl text-gray-600 hover:text-red-500 transition-colors"
                             />
-                        </div>
+                        </Link>
                     </div>
                 </div>
                 <div>
                     <Routes>
-                        <Route path="/" element={<BaseAsset asset={base?.base?.asset} baseId={base?.base?._id} />} />
+                        <Route path="/" element={<BaseOfficers user={base?.base?.user} baseId={base?.base?._id} />} />
+                        <Route path="asset" element={<BaseAsset asset={base?.base?.asset} baseId={base?.base?._id} />} />
                         <Route path="purchase" element={<Purchase purchaseData={base?.base?.purchases} fetchPurchase={fetchBase} />} />
+                        <Route path="order" element={<Order id={base?.base?._id} />} />
                         <Route path="transfer" element={<AssetTransfer transferData={base?.base?.transfer} baseId={base?.base?._id} fetchtransfer={fetchBase} />} />
                     </Routes>
                 </div>
@@ -92,4 +108,4 @@ const BaseCommanderDashboard = () => {
     )
 }
 
-export default BaseCommanderDashboard
+export default BaseDetailes

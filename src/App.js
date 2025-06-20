@@ -5,6 +5,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import BaseCommanderDashboard from "./component/BaseCommander/BaseCommanderDashboard";
 import AdminDashboard from "./component/Admin/AdminDashboard";
 import LogisticsOfficerDashboard from "./component/LogisticsOfficer/LogisticsOfficerDashboard";
+import BaseDetailes from "./component/Admin/BaseDetailes";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
 
                     <Route element={ <ProtectedRoute roles={["Admin"]} />} >
                         <Route path="/adminDashboard" element={<AdminDashboard />} />
+                        <Route path="/adminDashboard/:id/*" element={<BaseDetailes />} />
                     </Route>
                 </Routes>
             </AuthProvider>
