@@ -27,7 +27,7 @@ const LogisticsOfficerDashboard = () => {
 
     useEffect(() => {
         fetchBase()
-    }, [])
+    }, [auth?.user?.baseId._id])
 
     const totalPurchase = base?.base?.purchases.reduce((sum, purchase) => sum + Number(purchase?.asset?.price), 0)
     const closingBalance = Number(base?.base?.openingBalance) - totalPurchase
@@ -89,7 +89,7 @@ const LogisticsOfficerDashboard = () => {
                 <div>
                     <Routes>
                         <Route path="/" element={<Asset baseId={base?.base?._id} />} />
-                        <Route path="purchase" element={<Purchase purchaseData={base?.base?.purchases} fetchPurchase={fetchBase} />} />
+                        <Route path="purchase" element={<Purchase purchaseData={base?.base?.purchases} fetchPurchase={fetchBase} baseId={base?.base?._id} />} />
                         <Route path="order" element={<Order id={base?.base?._id} />} />
                         <Route path="transfer" element={<AssetTransfer transferData={base?.base?.transfer} baseId={base?.base?._id} fetchtransfer={fetchBase} />} />
                     </Routes>

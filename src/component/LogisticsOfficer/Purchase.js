@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const Purchase = ({ purchaseData, fetchPurchase }) => {
+const Purchase = ({ purchaseData, fetchPurchase, baseId }) => {
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
 
@@ -15,7 +15,7 @@ const Purchase = ({ purchaseData, fetchPurchase }) => {
     // refresh purchase
     useEffect(() => {
         fetchPurchase()
-    }, [])
+    }, [baseId])
 
     return (
         <div className="overflow-x-auto mx-6 my-4">

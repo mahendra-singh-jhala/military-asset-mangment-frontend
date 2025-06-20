@@ -26,7 +26,7 @@ const BaseDetailes = () => {
 
     useEffect(() => {
         fetchBase()
-    }, [])
+    }, [id])
 
     const totalPurchase = base?.base?.purchases.reduce((sum, purchase) => sum + Number(purchase?.asset?.price), 0)
     const closingBalance = Number(base?.base?.openingBalance) - totalPurchase

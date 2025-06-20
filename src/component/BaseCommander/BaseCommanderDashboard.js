@@ -26,7 +26,7 @@ const BaseCommanderDashboard = () => {
 
     useEffect(() => {
         fetchBase()
-    }, [])
+    }, [auth?.user?.baseId._id])
 
     const totalPurchase = base?.base?.purchases.reduce((sum, purchase) => sum + Number(purchase?.asset?.price), 0)
     const closingBalance = Number(base?.base?.openingBalance) - totalPurchase

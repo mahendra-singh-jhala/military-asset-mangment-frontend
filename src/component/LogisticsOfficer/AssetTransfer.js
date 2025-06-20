@@ -16,7 +16,7 @@ const AssetTransfer = ({ transferData, baseId, fetchtransfer }) => {
     // refresh transfer
     useEffect(() => {
         fetchtransfer()
-    }, [])
+    }, [baseId])
 
     return (
         <div className="mx-6">

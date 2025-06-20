@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { api } from '../../config/API';
 import { useAuth } from '../../context/AuthContext';
+import api from '../../config/API';
 
 const Login = () => {
     const [email, setEmail] = useState("");
