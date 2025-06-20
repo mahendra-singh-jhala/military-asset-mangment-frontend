@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, Route, Routes, useParams } from 'react-router-dom'
 import api from '../../config/API'
 import BaseAsset from '../BaseCommander/BaseAsset'
@@ -13,20 +13,20 @@ const BaseDetailes = () => {
     const { id } = useParams()
 
     // fetch base
-    const fetchBase = async () => {
+    const fetchBase = useCallback(async () => {
         try {
             const res = await api.get(`/api/base/${id}`)
             if (res.status === 200) {
                 setBase(res.data)
             }
         } catch (error) {
-            console.error("Error to fetch base", error.response?.data || error.message);
+            console.error("Error to fetch base", error.response?.data || error.message)
         }
-    }
+    }, [id])
 
     useEffect(() => {
         fetchBase()
-    }, [id])
+    }, [fetchBase])
 
     const totalPurchase = base?.base?.purchases.reduce((sum, purchase) => sum + Number(purchase?.asset?.price), 0)
     const closingBalance = Number(base?.base?.openingBalance) - totalPurchase

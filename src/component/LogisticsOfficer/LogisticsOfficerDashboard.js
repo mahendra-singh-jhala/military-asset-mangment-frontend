@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Navbar from '../../page/Navbar/Navbar'
 import { Link, Route, Routes } from 'react-router-dom'
 import Asset from './Asset'
@@ -14,20 +14,21 @@ const LogisticsOfficerDashboard = () => {
     const { auth, logout } = useAuth()
 
     // fetch base
-    const fetchBase = async () => {
+
+    const fetchBase = useCallback(async () => {
         try {
             const res = await api.get(`/api/base/${auth?.user?.baseId._id}`)
             if (res.status === 200) {
                 setBase(res.data)
             }
         } catch (error) {
-            console.error("Error to fetch base", error.response?.data || error.message);
+            console.error("Error to fetch base", error.response?.data || error.message)
         }
-    }
+    }, [auth?.user?.baseId._id])
 
     useEffect(() => {
         fetchBase()
-    }, [auth?.user?.baseId._id])
+    }, [fetchBase])
 
     const totalPurchase = base?.base?.purchases.reduce((sum, purchase) => sum + Number(purchase?.asset?.price), 0)
     const closingBalance = Number(base?.base?.openingBalance) - totalPurchase

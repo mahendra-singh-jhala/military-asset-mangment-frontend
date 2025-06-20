@@ -15,7 +15,7 @@ const Purchase = ({ purchaseData, fetchPurchase, baseId }) => {
     // refresh purchase
     useEffect(() => {
         fetchPurchase()
-    }, [baseId])
+    }, [fetchPurchase])
 
     return (
         <div className="overflow-x-auto mx-6 my-4">
