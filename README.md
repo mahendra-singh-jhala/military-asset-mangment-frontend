@@ -1,70 +1,150 @@
-# Getting Started with Create React App
+# Military Asset Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Military Asset Management System is a secure, role-based platform designed to manage the movement, assignment, and expenditure of critical assets—such as vehicles, weapons, and ammunition—across multiple military bases. It improves logistical efficiency by providing a centralized interface for base commanders and logistics officers to monitor and control asset distribution. The system ensures operational transparency, accountability, and streamlined decision-making by enforcing strict role-based access and audit-friendly data handling.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features & Roles
 
-### `npm start`
+### 👤 Role-Based Access Control
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Admin**
+  - Create and manage military bases
+  - Add and monitor assets across all bases
+  - Full access to all system data
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Base Commander**
+  - Restricted to viewing assets of their assigned base only
+  - Read-only access to asset assignments and inventory
 
-### `npm test`
+- **Logistics Officer**
+  - Purchase new assets
+  - Transfer assets between different bases
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠️ Technologies Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Backend:
+- Node.js with Express for building RESTful APIs
+- MongoDB with Mongoose for data storage
+- JWT (JSON Web Token) for authentication
+- CORS to enable frontend-backend communication
+- MVC Architecture for separation of concerns
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Frontend:
+- React for building a dynamic single-page interface
+- Tailwind CSS for responsive design
+- React Router for navigation
+- Axios for handling API requests
+- React Context API for global authentication state
+- React Icons for UI enhancement
+- HTML and CSS for structure and styling
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📁 Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Backend (`server/`)
+```
+server/
+├── config/             # Mongoose DB connection
+    ├── db.js             
+├── controllers/        # Business logic per feature
+    ├── AuthController.js
+│   ├── BaseController.js
+│   ├── PurchaseController.js
+│   └── TransferController.js        
+├── middleware/         # JWT & role-based access
+    ├── AuthMiddleware.js         
+├── models/             # Data models
+│   ├── AuthModel.js
+│   ├── BaseModel.js
+│   ├── PurchaseModel.js
+│   └── TransferModel.js
+├── routes/             # Express Router-based APIs
+    ├── AuthRoutes.js
+│   ├── BaseRoutes.js
+│   ├── PurchaseRoutes.js
+│   └── TransferRoutes.js             
+├── .env                # Secret keys and DB URI
+└── server.js           # App entry point
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Frontend (`client/`)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+client/
+├── src/
+│   ├── context/
+│   │   └── AuthContext.js
+│   ├── pages/
+│   │   └── Login.js
+│   ├── components/
+│   │   ├── Admin/
+│   │   │   └── AdminDashboard.js
+        │   └── BaseDetails.js
+        │   └── BaseOfficer.js
+│   │   ├── LogisticsOfficer/
+│   │   │   └── LogisticsOfficerDashboard.js
+│   │   │   └── transfer.js
+│   │   │   └── Asset.js
+│   │   │   └── Purchase.js
+│   │   └── BaseCommander/
+│   │       └── BaseCommanderDashboard.js
+│   │       └── BaseAsset.js
+│   ├── routes/      # Protected routes by role
+│       └── ProtectedRoute.js     
+│   ├── App.js
+    └── index.css
+│   └── index.js
+├── public/
+└── tailwind.config.js
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## ⚙️ How It Works
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Backend**
+  - Connects to MongoDB using Mongoose
+  - Builds APIs using Express and organizes them using Express Router
+  - Protects routes using JWT-based authentication
+  - Enforces role-based access with middleware
+  - Follows the MVC pattern for scalability
+  - Sends and receives data in JSON format
 
-### Code Splitting
+- **Frontend**
+  - Built with React and styled using Tailwind CSS
+  - Manages user sessions with JWTs stored in `localStorage`
+  - Uses Context API for global state management (auth)
+  - Protects routes based on user roles
+  - Axios handles all communication with the backend
+  - Responsive, single-page UI for seamless user experience
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## ⚙️ Setup Instructions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Backend
+```bash
+cd server
+npm install
+# Create .env file with:
+# MONGO_URI=<your_mongo_uri>
+# JWT_SECRET=<your_secret_key>
+npm run dev
 
-### Making a Progressive Web App
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Frontend
 
-### Advanced Configuration
+```
+cd client
+npm install
+npm start      # Launches React app at http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
